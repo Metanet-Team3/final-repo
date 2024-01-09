@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+    <mapper namespace="com.meta.metaway.schedule.dao.IScheduleRepository">
+	    <insert id="insertSchedule" parameterType="com.meta.metaway.schedule.model.Schedule">
+	        INSERT INTO schedule (schedule_id, visit_date, visit_cycle, visit_type, visit_state, staff_id, user_id, order_id)
+	        VALUES (#{scheduleId}, #{visitDate}, #{visitCycle}, #{visitType}, #{visitState}, #{staffId}, #{userId}, #{orderId})
+	    </insert>
+    	
+    	<select id="getNextMaxScheduleId" resultType="int">
+	    	 SELECT COALESCE(max(schedule_id), 0) + 1 FROM schedule
+	    </select>
+	    
+	    <delete id ="deleteSchedule" parameterType="Long">
+	    	delete from schedule_id
+			where order_id = #{orderId} and staff_id =#{staffId}
+	    </delete>
+    </mapper>

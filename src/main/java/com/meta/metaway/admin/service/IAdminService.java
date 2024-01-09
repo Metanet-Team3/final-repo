@@ -18,5 +18,5 @@ public interface IAdminService {
 	AdminOrderDetailDTO selectOneOrderList(long orderId);
 	List<AdminStaffDTO> selectAllCodiList();
 	List<AdminStaffDTO> selectAllDriverList();
-	
+	int getStaffId(long staffId);
 }

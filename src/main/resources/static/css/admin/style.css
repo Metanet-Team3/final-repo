@@ -63,7 +63,8 @@ body {font-family: 'NanumSquareNeo-Variable';}
 .assignment .flex_2 {width: 40%; box-sizing: border-box; margin-left: 20px;}
 .assignment .flex_2 h3 {font-size: 18px;}
 .assignment .flex_2 .bo {height: 380px; padding: 20px;}
-.assignment .engineer_box div.en { font-size: 20px; background-color: #ededed; text-align: center; padding: 20px; box-sizing: border-box;}
+.assignment .engineer_box div.driver { font-size: 20px; background-color: #ededed; text-align: center; padding: 20px; box-sizing: border-box;}
+.assignment .engineer_box div.codi { font-size: 20px; background-color: #ededed; text-align: center; padding: 20px; box-sizing: border-box;}
 .assignment .engineer_box div p {margin: 0 !important;}
 .assignment .engineer_box button {width: 50%;}
 .assignment .flex_button {display: flex; justify-content: space-between; margin-bottom: 20px;}

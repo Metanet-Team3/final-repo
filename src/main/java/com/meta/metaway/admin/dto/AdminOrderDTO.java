@@ -37,6 +37,8 @@ public class AdminOrderDTO {
             return "배정 완료";
         } else if (orderState == 2) {
             return "주문 취소";
+        } else if (orderState == 3) {
+            return "배정 완료";
         } else {
             // 다른 상태에 대한 처리를 원한다면 추가적으로 처리할 수 있습니다.
             return "알 수 없음";

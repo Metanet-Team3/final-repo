@@ -65,14 +65,17 @@ public class AdminService implements IAdminService {
 
 	@Override
 	public List<AdminStaffDTO> selectAllCodiList() {
-		// TODO Auto-generated method stub
 		return adminRepository.selectAllCodiList();
 	}
 
 	@Override
 	public List<AdminStaffDTO> selectAllDriverList() {
-		// TODO Auto-generated method stub
 		return adminRepository.selectAllDriverList();
+	}
+
+	@Override
+	public int getStaffId(long staffId) {
+		return adminRepository.getStaffId(staffId);
 	}
 	
 }

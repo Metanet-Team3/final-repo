@@ -5,7 +5,8 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-	<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
+	<!--jquery-->
+	<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 	<link rel="stylesheet" th:href="@{/css/admin/style.css}">
@@ -13,7 +14,8 @@
 	<link rel="stylesheet"
 		href="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/css/bootstrap-datepicker.min.css">
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/js/bootstrap-datepicker.min.js"></script>
-
+	<!--sweetalert-->
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
 	<title>주문 리스트</title>
 </head>
@@ -22,12 +24,12 @@
     <div class="assignment wrap">
         <div class="flex_1">
             <div class="flex_1_1" th:object="${orderDetail}" >
-                <em>주문고객: <span th:text="${orderDetail.orderName}"> 홍길동 </span> 님</em>
+                <em>주문고객: <span th:text="${orderDetail.orderName}"></span> 님</em>
                 <div class="bo">
                     <div>
                         <ul>
-                            <li>제품 모델 :<span th:text="${orderDetail.productModel}">cp-7211N</span></li>
-                            <li>제품 이름 :<span th:text="${orderDetail.productName}">아이콘 정수기 2</span></li>
+                            <li>제품 모델 :<span th:text="${orderDetail.productModel}"></span></li>
+                            <li>제품 이름 :<span th:text="${orderDetail.productName}"></span></li>
                             <li>약정년 :<span th:text="${orderDetail.contractYear}"></span>년</li>
                             <li>총 가격 :<span th:text="${orderDetail.orderPrice}"></span>원</li>
                             <li>
@@ -44,10 +46,10 @@
                 <em>고객 주소</em>
                 <div class="bo">
                     <ul>
-                        <li>고객명 : <span th:text="${orderDetail.orderName}">김메타</span> 님</li>
+                        <li>고객명 : <span th:text="${orderDetail.orderName}"></span> 님</li>
                         <li>고객 주소 : <span th:text="${orderDetail.orderAddress}"></span></li>
                         <li>고객 연락처 :<span th:text="${orderDetail.userPhone}"></span></li>
-                        <li>요청 사항 :<span th:text="${orderDetail.orderContent}">오시기 전 연락주세요!</span></li>
+                        <li>요청 사항 :<span th:text="${orderDetail.orderContent}"></span></li>
                     </ul>
                 </div>
             </div>
@@ -65,28 +67,30 @@
                     <div class="engineer_box">
                         <h3>설치 기사</h3>
                         <div>
-                            <div class="en">
-                                <p>김기사</p>
+                            <div class="driver">
+								<!--여기에 모달에서 배정한 기사의 이름-->
+                                <p>기사를 배정해주세요.</p>
                             </div>
                             <div class="flex_button">
                                 <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#myModal">기사 선택</button>
-                                <button type="reset" class="btn btn-outline-secondary">초기화</button>
+                                <button type="button" class="btn btn-outline-secondary" onclick="resetStaff('driver')">배정취소</button>
                             </div>
                         </div>
                     </div>
                     <div class="engineer_box">
                         <h3>코디</h3>
                         <div>
-                            <div class="en">
-                                <p>김코디</p>
+                            <div class="codi">
+								<!--여기에 모달에서 배정한 코디의 이름-->
+                                <p>코디를 배정해주세요.</p>
                             </div>
                             <div class="flex_button">
                                 <button type="button" class="btn btn-outline-primary"  data-toggle="modal" data-target="#myCodiModal">코디 선택</button>
-                                <button type="button" class="btn btn-outline-secondary">초기화</button>
+                                <button type="button" class="btn btn-outline-secondary" onclick="resetStaff('codi')">배정취소</button>
                             </div>
                         </div>
                     </div>
-                	<button type="button" class="btn btn-primary btn-block">확인</button>
+	                	<button type="button" class="btn btn-primary btn-block">배정 완료</button>
                 </div>
             </div>
         </div>
@@ -99,7 +103,7 @@
 	  
 	        <!-- Modal Header -->
 	        <div class="modal-header">
-	          <h4 class="modal-title">Modal Heading</h4>
+	          <h4 class="modal-title">미배정 담당기사 목록</h4>
 	          <button type="button" class="close" data-dismiss="modal">&times;</button>
 	        </div>
 	  
@@ -125,8 +129,9 @@
 			        <td th:text="${driver.workPlace}">서울</td>
 					<td>
 					 	<input type="hidden" name="orderId" th:value="${orderDetail.orderId}">
-                    	<input type="hidden" name="driverId" th:value="${driver.staffId}">
-						<button type="submit" class="btn btn-outline-primary">배정</button>
+                    	<input type="hidden" name="staffId" th:value="${driver.staffId}">
+                    	<input type="hidden" name="userId" th:value="${driver.userId}">
+						<button type="button" class="btn btn-outline-primary" th:onclick="assignStaff('driver', '[[${driver.userName}]]','[[${driver.staffId}]]','[[${driver.userId}]]')">배정</button>
 					</td>
 			      </tr>
 			    </tbody>
@@ -147,7 +152,7 @@
 	  
 	        <!-- Modal Header -->
 	        <div class="modal-header">
-	          <h4 class="modal-title">코디 리스트</h4>
+	          <h4 class="modal-title">미배정 코디 목록</h4>
 	          <button type="button" class="close" data-dismiss="modal">&times;</button>
 	        </div>
 	  
@@ -166,15 +171,16 @@
 			    </thead>
 			    <tbody>
 			      <tr th:each="codi: ${codiList}">
-			        <td th:text="${codi.staffId}">1</td>
-			        <td th:text="${codi.userName}">김기사</td>
-			        <td th:text="${codi.userEmail}">john@example.com</td>
-			        <td th:text="${codi.userPhone}">010-1111-1111</td>
-			        <td th:text="${codi.workPlace}">서울</td>
+			        <td th:text="${codi.staffId}"></td>
+			        <td th:text="${codi.userName}"></td>
+			        <td th:text="${codi.userEmail}"></td>
+			        <td th:text="${codi.userPhone}"></td>
+			        <td th:text="${codi.workPlace}"></td>
 					<td>
 					 	<input type="hidden" name="orderId" th:value="${orderDetail.orderId}">
-                    	<input type="hidden" name="driverId" th:value="${codi.staffId}">
-						<button type="submit" class="btn btn-outline-primary">배정</button>
+                    	<input type="hidden" name="staffId" th:value="${codi.staffId}">
+                    	<input type="hidden" name="userId" th:value="${codi.userId}">
+						<button type="submit" class="btn btn-outline-primary" th:onclick="assignStaff('codi', '[[${codi.userName}]]', '[[${codi.staffId}]]','[[${codi.userId}]]')">배정</button>
 					</td>
 			      </tr>
 			    </tbody>
@@ -192,7 +198,124 @@
 <style>
 
 </style>
-<script>
-</script>
+<!--<script>
+	 function assignStaff(staffType, staffName) {
+        if (staffType === 'driver') {
+            // 기사 출력란에 기사 이름을 표시
+            document.querySelector('.driver p').innerText = staffName;
+        } else if (staffType === 'codi') {
+            // 코디 출력란에 코디 이름을 표시
+            document.querySelector('.codi p').innerText = staffName;
+        }
 
+        // 모달을 닫음
+        $('#myModal').modal('hide');
+        $('#myCodiModal').modal('hide');
+    }
+	  function resetStaff(staffType) {
+        if (staffType === 'driver') {
+            // 기사 출력란 초기화
+            document.querySelector('.driver p').innerText = "기사를 배정해주세요.";
+        } else if (staffType === 'codi') {
+            // 코디 출력란 초기화
+            document.querySelector('.codi p').innerText = "코디를 배정해주세요.";
+        }
+    }
+</script>-->
+<script>
+// 직원 정보 저장
+function saveStaffInfo(staffType, staffName, staffId) {
+    const staffInfo = { staffName, staffId };
+    localStorage.setItem(`${staffType}_info`, JSON.stringify(staffInfo));
+}
+
+// 페이지 로딩 시 직원 정보 불러오기
+function loadStaffInfo(staffType) {
+    const staffInfoString = localStorage.getItem(`${staffType}_info`);
+    return staffInfoString ? JSON.parse(staffInfoString) : null;
+}
+
+// 직원 이름 저장
+function saveAssignedStaffName(staffType, staffName, staffId) {
+    localStorage.setItem(`${staffType}_name`, `${staffName}/${staffId}`);
+}
+
+// 페이지 로딩 시 직원 이름 불러오기
+function loadAssignedStaffName(staffType) {
+    const staffNameString = localStorage.getItem(`${staffType}_name`);
+    return staffNameString ? staffNameString.split('/') : null;
+}
+
+function assignStaff(staffType, staffName, staffId, userId) {
+    assignStaffAsync(staffType, staffName, staffId, userId);
+}
+
+function assignStaffAsync(staffType, staffName, staffId, userId) {
+    const orderId = $('input[name="orderId"]').val();
+    console.log(orderId, staffType, staffId);
+    console.log(userId);
+    Swal.fire({
+        title: '직원 배정 확인',
+        text: `${staffName}을(를) 선택하시겠습니까?`,
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: '확인',
+        cancelButtonText: '취소'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                type: 'POST',
+                url: `/schedule/${staffType}/${orderId}/${staffId}`,
+                contentType: 'application/json',
+                data: JSON.stringify({ userId: userId }),
+                success: function (data) {
+                    if (staffType === 'driver') {
+                        $('.driver p').text(`${staffName}(${staffId})`);
+                        saveAssignedStaffName(staffType, staffName, staffId);
+                    } else if (staffType === 'codi') {
+                        $('.codi p').text(`${staffName}(${staffId})`);
+                        saveAssignedStaffName(staffType, staffName, staffId);
+                    }
+                    $('#myModal').modal('hide');
+                    $('#myCodiModal').modal('hide');
+                },
+                error: function (xhr, status, error) {
+                    console.error('Failed to assign staff:', error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: '배정 실패',
+                        text: '직원을 배정하는 데 문제가 발생했습니다.',
+                    });
+                }
+            });
+        }
+    });
+}
+
+// 페이지 로딩 시 저장된 직원 정보와 이름 불러오기
+$(document).ready(function () {
+    const savedDriverInfo = loadStaffInfo('driver');
+    const savedCodiInfo = loadStaffInfo('codi');
+    const savedDriverName = loadAssignedStaffName('driver');
+    const savedCodiName = loadAssignedStaffName('codi');
+
+    if (savedDriverInfo) {
+        $('.driver p').text(`${savedDriverInfo.staffName}(${savedDriverInfo.staffId})`);
+    }
+
+    if (savedCodiInfo) {
+        $('.codi p').text(`${savedCodiInfo.staffName}(${savedCodiInfo.staffId})`);
+    }
+
+    if (savedDriverName) {
+        $('.driver p').text(`${savedDriverName[0]}(${savedDriverName[1]})`);
+    }
+
+    if (savedCodiName) {
+        $('.codi p').text(`${savedCodiName[0]}(${savedCodiName[1]})`);
+    }
+});
+</script>
 </html>

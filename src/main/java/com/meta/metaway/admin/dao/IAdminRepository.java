@@ -25,7 +25,9 @@ public interface IAdminRepository {
 	void updateCancleOrder(long orderId);
 	void updateCompleteOrder(long orderId);
 	AdminOrderDetailDTO selectOneOrderList(long orderId);
+	AdminStaffDTO selectOneStaffList(long staffId);
 	List<AdminStaffDTO> selectAllCodiList();
 	List<AdminStaffDTO> selectAllDriverList();
+	int getStaffId(long staffId);
 	
 	}

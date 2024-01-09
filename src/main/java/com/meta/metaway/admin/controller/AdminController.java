@@ -144,19 +144,5 @@ public class AdminController {
 		return "admin/orderdetail";
 	}
 	
-	@PostMapping("/assigncodi")
-	public String codiList(Model model) {
-		
-		return "admin/orderdetail";
-	}
-	
-	@PostMapping("/assigndriver")
-	public String driverList(Model model) {
-		
-		
-		return "admin/orderdetail";
-	}
-	
-	
 
 }
